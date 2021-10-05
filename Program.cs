@@ -28,8 +28,8 @@ namespace CosmicDJ
                 Console.Clear();
                 Console.WriteLine($"Cosmos DB Modeling and Partitioning Demos");
                 Console.WriteLine($"-----------------------------------------");
-                Console.WriteLine($"[a]   Query for single customer");
-                Console.WriteLine($"[b]   Point read for single customer");
+                Console.WriteLine($"[a]   Query for single DJ");
+                Console.WriteLine($"[b]   Point read for single DJ");
                 Console.WriteLine($"-------------------------------------------");
                 Console.WriteLine($"[k]   Create databases and containers");
                 Console.WriteLine($"[l]   Upload data to containers");
@@ -42,12 +42,12 @@ namespace CosmicDJ
                 if (result.KeyChar == 'a')
                 {
                     Console.Clear();
-                    await QueryCustomer();
+                    await QueryDJ();
                 }
                 else if (result.KeyChar == 'b')
                 {
                     Console.Clear();
-                    await GetCustomer();
+                    await GetDJ();
                 }
                /*  else if (result.KeyChar == 'k')
                 {
@@ -76,25 +76,25 @@ namespace CosmicDJ
             }
 
         }
-         public static async Task QueryCustomer() 
+         public static async Task QueryDJ() 
         {
             Database database = client.GetDatabase("MusicService");
             Container container = database.GetContainer("dj");
 
-            string customerId = "bb43dfa6-8622-4314-afaa-8451f38b04ed";
+            string documemntId = "bb43dfa6-8622-4314-afaa-8451f38b04ed";
 
             //Get a customer with a query
             string sql = $"SELECT * FROM c WHERE c.id = @id";
 
             FeedIterator<dj> resultSet = container.GetItemQueryIterator<dj>(
                 new QueryDefinition(sql)
-                .WithParameter("@id", customerId),
+                .WithParameter("@id", documemntId),
                 requestOptions: new QueryRequestOptions()
                 {
-                    PartitionKey = new PartitionKey(customerId)
+                    PartitionKey = new PartitionKey(documemntId)
                 });
 
-            Console.WriteLine("Query for a single customer\n");
+            Console.WriteLine("Query for a single DJ\n");
             while (resultSet.HasMoreResults)
             {
                 FeedResponse<dj> response = await resultSet.ReadNextAsync();
@@ -111,22 +111,20 @@ namespace CosmicDJ
             }
         }
 
-        public static async Task GetCustomer()
+        public static async Task GetDJ()
         {
             Database database = client.GetDatabase("MusicService");
             Container container = database.GetContainer("dj");
 
-            string customerId = "bb43dfa6-8622-4314-afaa-8451f38b04ed";
+            string documentId = "bb43dfa6-8622-4314-afaa-8451f38b04ed";
             string pk = "2 ELEMENTS";
 
-            Console.WriteLine("Point Read for a single customer\n");
+            Console.WriteLine("Point Read for a single DJ\n");
 
             //Get a customer with a point read
             ItemResponse<dj> response =  await container.ReadItemAsync<dj>(
-                id: customerId, 
+                id: documentId, 
                 partitionKey: new PartitionKey(pk));
-
-            Print(response.Resource);
 
             Console.WriteLine($"Point Read Request Charge {response.RequestCharge}\n");
             Console.WriteLine("Press any key to continue...");
