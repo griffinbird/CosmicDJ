@@ -1,3 +1,6 @@
 /appSettings.json
 /bin
 /obj
+.env
+/nodejs/config.js
+node_modules/

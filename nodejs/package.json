@@ -1,0 +1,16 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/cosmos": "^3.14.1",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.3"
+  }
+}

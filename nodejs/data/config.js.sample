@@ -1,0 +1,11 @@
+// @ts-check
+
+const config = {
+    endpoint: "",
+    key: "",
+    databaseId: "MusicService",
+    containerId: "dj",
+    partitionKey: { kind: "Hash", paths: ["/dj"] }
+  };
+  
+  module.exports = config;
